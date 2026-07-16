@@ -1,0 +1,17 @@
+.env
+
+# twscrape account pool DB (contains Twitter credentials)
+*.db
+.twscrape/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# GCS service account keys — never commit
+*service-account*.json
+*credentials*.json

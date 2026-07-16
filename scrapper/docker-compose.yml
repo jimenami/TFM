@@ -1,0 +1,14 @@
+services:
+  scraper:
+    build: .
+    env_file: .env
+    volumes:
+      # Mount GCS service account key if using file-based credentials
+      - ${GOOGLE_APPLICATION_CREDENTIALS:-/dev/null}:${GOOGLE_APPLICATION_CREDENTIALS:-/dev/null}:ro
+      # twscrape stores account pool in a local SQLite DB — persist it across runs
+      - twscrape_data:/app/.twscrape
+    # Override CMD to run specific campaigns:
+    # command: ["--campaigns", "trump_2024", "españa_2023", "--task", "sentiment"]
+
+volumes:
+  twscrape_data:
