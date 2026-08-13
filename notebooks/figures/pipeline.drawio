@@ -1,0 +1,175 @@
+<mxfile host="65bd71144e">
+    <diagram id="lGga-AmZfWBZSb-pvWel" name="Page-1">
+        <mxGraphModel dx="1937" dy="947" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="Flujo de datos TFM — Análisis de Sentimiento y Stance en Campañas Electorales" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=15;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="-50" y="10" width="1060" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="&lt;b&gt;TweetEval&lt;/b&gt;&lt;br&gt;(HuggingFace)&lt;br&gt;&lt;font color=&#39;#555555&#39;&gt;sentiment + stance ×5&lt;br&gt;cardiffnlp/tweet_eval&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="90" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="&lt;b&gt;Scraper propio&lt;/b&gt;&lt;br&gt;(twscrape + cookie auth)&lt;br&gt;&lt;font color=&#39;#555555&#39;&gt;4 campañas · 110 queries&lt;br&gt;brexit_2016 · trump_2016&lt;br&gt;trump_2024 · españa_2023&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="90" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="&lt;b&gt;Kaggle Datasets&lt;/b&gt;&lt;br&gt;&lt;font color=&#39;#555555&#39;&gt;Hamner 2016 (trump_2016)&lt;br&gt;Chadjinik (brexit_2016)&lt;br&gt;Kaggle 2024 (trump_2024)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="90" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="upload_electoral_campaigns.py" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=10;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="190" width="200" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="&lt;b&gt;gs://tfm-twitter-raw/&lt;/b&gt;&lt;br&gt;&lt;font color=&#39;#555555&#39;&gt;JSON · scraper output + Kaggle convertido&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="245" width="450" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="&lt;b&gt;01_preprocessing.ipynb&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="365" width="720" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="8a" value="Normalizar BERTweet-style&lt;br&gt;@user→@USER · URL→HTTPURL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="55" y="400" width="165" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="8b" value="Eliminar #semst&lt;br&gt;(artefacto SemEval-2016)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="232" y="400" width="165" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="8c" value="Re-split estratificado&lt;br&gt;train+val → 90/10" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="409" y="400" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="8d" value="Dedup por tweet.id&lt;br&gt;(esp. españa_2023)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="581" y="400" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="&lt;b&gt;gs://tfm-twitter-processed/&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;tweeteval/{sentiment,stance_*}/{train,val,test}.parquet&amp;nbsp;&amp;nbsp;&lt;/font&gt;&lt;div&gt;&lt;font color=&quot;#555555&quot;&gt;scraped/{campaign}.parquet&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#555555&quot;&gt;candidate_tweets/{campaign}.parquet&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="535" width="720" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="&lt;b&gt;02_sentiment_tweeteval.ipynb&lt;/b&gt;&lt;br&gt;&lt;font color=&#39;#555555&#39;&gt;Fine-tuning · 4 modelos:&lt;br&gt;twitter-roberta · BERTweet&lt;br&gt;RoBERTa · BERT&lt;br&gt;&lt;b&gt;Métrica: F1-Macro&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="670" width="340" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="&lt;b&gt;04_stance_tweeteval.ipynb&lt;/b&gt;&lt;br&gt;&lt;font color=&#39;#555555&#39;&gt;Fine-tuning por tópico ×5&lt;br&gt;+ Zero-shot NLI baseline&lt;br&gt;k-fold 5 (val pequeño)&lt;br&gt;&lt;b&gt;Métrica: F1-avg&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="670" width="340" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="🏆 &lt;b&gt;Mejor modelo sentimiento&lt;/b&gt;&lt;br&gt;&lt;font color=&#39;#555555&#39;&gt;twitter-xlm-roberta o BERTweet&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="840" width="340" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="🏆 &lt;b&gt;Mejor modelo stance&lt;/b&gt;&lt;br&gt;&lt;font color=&#39;#555555&#39;&gt;nli-deberta-v3-small o fine-tuned&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="840" width="340" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="&lt;b&gt;03_sentiment_scraped.ipynb&lt;/b&gt;&lt;br&gt;&lt;font color=&#39;#555555&#39;&gt;Inferencia en 4 campañas&lt;br&gt;Análisis temporal semanal&lt;br&gt;Cross-campaign comparison&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="970" width="340" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="&lt;b&gt;05_stance_scraped.ipynb&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#555555&quot;&gt;Zero-shot NLI en campañas&lt;br&gt;Leave/Remain · Trump/Harris&lt;br&gt;PP/PSOE/VOX/SUMAR · Trump/Clinton&lt;br&gt;&lt;br&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="421" y="970" width="340" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="&lt;b&gt;07_results_analysis.ipynb&lt;/b&gt;&lt;br&gt;&lt;font color=&#39;#555555&#39;&gt;Tablas F1 comparativas · Series temporales · Violin plots · Heatmaps · Análisis cross-campaign&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="1125" width="720" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="&lt;b&gt;Análisis de resultados y conclusiones finales&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="1250" width="720" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="&lt;b&gt;Leyenda&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="820" y="90" width="80" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="19a" value="Fuente de datos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="820" y="115" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="19b" value="Almacenamiento GCS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="820" y="155" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="19c" value="Procesamiento / ETL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="820" y="195" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="19d" value="Modelado / Fine-tuning" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="820" y="235" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="19e" value="Inferencia / Análisis" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="820" y="275" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="19f" value="Resultados / Output" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="820" y="315" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="47" target="8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="4" target="6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="5" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="7" target="6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="6" target="8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="8" target="9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="9" target="10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="9" target="11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="10" target="12" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="11" target="13" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="12" target="14" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#d6b656;" parent="1" source="9" target="14" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="13" target="15" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" style="edgeStyle=orthogonalEdgeStyle;dashed=1;strokeColor=#d6b656;" parent="1" source="9" target="15" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" value="&lt;b&gt;gs://tfm-twitter-curated/&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;fontStyle=1;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="1075" width="720" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="70a" value="&lt;b&gt;predictions/sentiment/&lt;/b&gt;&lt;br&gt;&lt;font color=&#39;#555555&#39;&gt;{campaign}.parquet&lt;br&gt;tweet_id · text · label&lt;br&gt;score · campaign · date&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="55" y="1110" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="70b" value="&lt;b&gt;predictions/stance/&lt;/b&gt;&lt;br&gt;&lt;font color=&#39;#555555&#39;&gt;{campaign}.parquet&lt;br&gt;tweet_id · target · stance&lt;br&gt;score · campaign · date&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="232" y="1110" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="70c" value="&lt;b&gt;kpis/weekly_sentiment/&lt;/b&gt;&lt;br&gt;&lt;font color=&#39;#555555&#39;&gt;Sentiment score semanal&lt;br&gt;por campaña · serie temporal&lt;br&gt;% pos / neg / neutral&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="409" y="1110" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="70d" value="&lt;b&gt;kpis/stance_distribution/&lt;/b&gt;&lt;br&gt;&lt;font color=&#39;#555555&#39;&gt;favor / against / neither&lt;br&gt;por target · por campaña&lt;br&gt;polarización cross-campaign&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="581" y="1110" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="14" target="70" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="15" target="70" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="71" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;" parent="1" target="70" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="70" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="400" y="1250" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="400" y="1240"/>
+                            <mxPoint x="400" y="1240"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="48" value="" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="3" target="47" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="140" y="170" as="sourcePoint"/>
+                        <mxPoint x="400" y="365" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="47" value="01_eda_tweeteval.ipynb" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=10;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="200" width="200" height="35" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

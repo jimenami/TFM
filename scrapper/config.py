@@ -12,12 +12,19 @@ ENV_FILE = PROJECT_ROOT / ".env"
 class Settings(BaseSettings):
     # Google Cloud Storage
     gcs_bucket: str
-    gcs_prefix: str = "twitter/raw"
+    gcs_prefix: str = ""  # empty = campaign is top-level folder in bucket
     google_application_credentials: str | None = None  # path to service account JSON
 
-    # twscrape — pool of Twitter accounts (comma-separated "username:password:email:email_password")
-    # At least one account required. More accounts = higher throughput.
+    # twscrape — pool of Twitter accounts
+    # Format: "username:password:email:email_password"
+    # With cookies (recommended, bypasses Cloudflare):
+    #   "username:password:email:email_password:CT0_VALUE:AUTH_TOKEN_VALUE"
+    # Multiple accounts: comma-separated
     twitter_accounts: str
+
+    # Human-like delays between requests (seconds)
+    min_delay: float = 3.0
+    max_delay: float = 8.0
 
     # Scraping parameters
     max_tweets_per_query: int = 500

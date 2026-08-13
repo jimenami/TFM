@@ -18,8 +18,8 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 
-from TFM.scrapper.political_queries import CAMPAIGNS
-from TFM.scrapper.scraper import run_scraper
+from political_queries import CAMPAIGNS
+from scraper import run_scraper
 
 
 def parse_args() -> argparse.Namespace:
@@ -38,6 +38,12 @@ def parse_args() -> argparse.Namespace:
         help="Task type to scrape (default: all)",
     )
     parser.add_argument(
+        "--targets",
+        nargs="+",
+        default=None,
+        help="Stance target slugs to scrape, e.g. sumar_diaz (default: all)",
+    )
+    parser.add_argument(
         "--list",
         action="store_true",
         help="List available campaigns and exit",
@@ -54,7 +60,7 @@ def main() -> None:
             print(f"  {slug:<20} {camp['label']}  [{camp['since']} → {camp['until']}]  lang={camp['lang']}")
         sys.exit(0)
 
-    results = asyncio.run(run_scraper(campaigns=args.campaigns, task=args.task))
+    results = asyncio.run(run_scraper(campaigns=args.campaigns, task=args.task, targets=args.targets))
 
     total = sum(results.values())
     print(f"\nScraping complete — {total} tweets collected across {len(results)} queries")
