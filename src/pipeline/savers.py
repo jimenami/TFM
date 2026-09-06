@@ -45,6 +45,7 @@ def save_df_to_gcs(
     """
     # Sanitize mixed-type object columns so pyarrow can serialize them
     df = df.copy()
+    df = df.loc[:, ~df.columns.duplicated()]  # drop duplicate column names
     for col in df.columns:
         if df[col].dtype == object:
             df[col] = df[col].astype(str)
