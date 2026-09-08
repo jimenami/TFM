@@ -27,3 +27,5 @@ MCD - Redes neuronales profundas para la detección de patologías mediante dato
 # Virtual envs
 venv/
 .venv/
+
+openai_key.txt
